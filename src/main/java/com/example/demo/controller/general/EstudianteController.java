@@ -1,4 +1,4 @@
-package com.example.demo.controller;
+package com.example.demo.controller.general;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -15,12 +15,16 @@ import org.springframework.web.bind.annotation.RestController;
 import com.example.demo.entity.Estudiante;
 import com.example.demo.exception.ModeloNotFoundException;
 import com.example.demo.service.EstudianteService;
+import static com.example.demo.commons.GlobalConstans.API_ESTUDIANTES;
 
 import java.util.ArrayList;
 import java.util.List;
 import jakarta.validation.Valid;
+import lombok.extern.slf4j.Slf4j;
+
+@Slf4j
 @RestController
-@RequestMapping("/estudiantes")
+@RequestMapping(API_ESTUDIANTES)
 public class EstudianteController {
 	@Autowired
 	private EstudianteService service;
