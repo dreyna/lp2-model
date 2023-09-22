@@ -2,7 +2,7 @@ package com.example.demo.commons;
 
 public class GlobalConstans {
 	/* APIS */
-	public static final String API_CARRERA = "/v1/carreras";
+	public static final String API_CARRERAS = "/v1/carreras";
 	public static final String API_ESTUDIANTES = "/v1/estudiantes";
 	
 	/* Mensajes*/	

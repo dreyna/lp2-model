@@ -38,7 +38,7 @@ public class Estudiante{
         private String apellidos;
         private Integer edad;
         @NotBlank(message = "Direccion es requerida")
-        @Size(min = 5, max = 50)
+        @Size(min = 3, max = 50)
         private String direccion;
         private String ciudad;
         private String pais;

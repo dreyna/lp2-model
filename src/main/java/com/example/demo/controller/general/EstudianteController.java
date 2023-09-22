@@ -13,16 +13,13 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.example.demo.entity.Estudiante;
-import com.example.demo.exception.ModeloNotFoundException;
 import com.example.demo.service.EstudianteService;
 import static com.example.demo.commons.GlobalConstans.API_ESTUDIANTES;
-
-import java.util.ArrayList;
 import java.util.List;
-import jakarta.validation.Valid;
-import lombok.extern.slf4j.Slf4j;
+import java.util.Optional;
 
-@Slf4j
+import jakarta.validation.Valid;
+
 @RestController
 @RequestMapping(API_ESTUDIANTES)
 public class EstudianteController {
@@ -31,36 +28,61 @@ public class EstudianteController {
 	
 	@GetMapping
 	public ResponseEntity<List<Estudiante>> listar() {
-		List<Estudiante> estudiantes = new ArrayList<>();
-		 estudiantes = service.findEstudianteAll();
-		return new ResponseEntity<List<Estudiante>>(estudiantes, HttpStatus.OK);
+		try {
+		      List<Estudiante> prods = service.findEstudianteAll();
+		      if (prods.isEmpty()) {
+		        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+		      }
+
+		      return new ResponseEntity<>(prods, HttpStatus.OK);
+		    } catch (Exception e) {
+		      return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
+		    }
 	}
 	
 	@PostMapping
     public ResponseEntity<Estudiante> crearEstudiante(@Valid @RequestBody Estudiante estudiante){
-        service.createEstudiante(estudiante);
-        return new ResponseEntity<Estudiante>(HttpStatus.CREATED);
+        try {
+            Estudiante _prod = service.createEstudiante(estudiante);
+            return new ResponseEntity<Estudiante>(_prod, HttpStatus.CREATED);
+          } catch (Exception e) {
+            return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
+          }
     }
 	
 	@GetMapping("/{id}")
 	public ResponseEntity<Estudiante> getEstudianteById(@PathVariable("id") Long id){
-		Estudiante estudiante= service.getEstudiante(id).orElseThrow(() -> new ModeloNotFoundException("Estudiante no encontrado $id"));
-		return new ResponseEntity<Estudiante>(estudiante, HttpStatus.OK);
+		Optional<Estudiante> estData = service.getEstudiante(id);
+	    if (estData.isPresent()) {
+	      return new ResponseEntity<Estudiante>(estData.get(), HttpStatus.OK);
+	    } else {
+	      return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+	    }
 	}
 	@DeleteMapping("/{id}")
 	public ResponseEntity<Estudiante> deleteEstudiante(@PathVariable("id") Long id){
-		service.deleteEstudiante(id);
-		return ResponseEntity.ok().build();
+		try {
+			service.deleteEstudiante(id);
+	        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+	      } catch (Exception e) {
+	        return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+	      }
 	}
 	@PutMapping("/{id}")
-	public Estudiante updateEstudiante(@PathVariable("id") Long id, @Valid @RequestBody Estudiante estudiante){
-		Estudiante dbestudiante =  service.getEstudiante(id).orElseThrow(() -> new ModeloNotFoundException("Estudiante No enocntrado"));
-		dbestudiante.setNombres(estudiante.getNombres());
-		dbestudiante.setApellidos(estudiante.getApellidos());
-		dbestudiante.setDireccion(estudiante.getDireccion());
-		dbestudiante.setEdad(estudiante.getEdad());
-		dbestudiante.setCiudad(estudiante.getCiudad());
-		dbestudiante.setPais(estudiante.getPais());
-		return service.updateEstudiante(dbestudiante);
+	public ResponseEntity<?> updateEstudiante(@PathVariable("id") Long id, @Valid @RequestBody Estudiante estudiante){
+		Optional<Estudiante> estData = service.getEstudiante(id);
+	      if (estData.isPresent()) {
+	        Estudiante dbestudiante = estData.get();
+	        dbestudiante.setNombres(estudiante.getNombres());
+			dbestudiante.setApellidos(estudiante.getApellidos());
+			dbestudiante.setDireccion(estudiante.getDireccion());
+			dbestudiante.setEdad(estudiante.getEdad());
+			dbestudiante.setCiudad(estudiante.getCiudad());
+			dbestudiante.setPais(estudiante.getPais());
+			dbestudiante.setCarrera(estudiante.getCarrera());
+	        return new ResponseEntity<Estudiante>(service.updateEstudiante(dbestudiante), HttpStatus.OK);
+	      } else {
+	        return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+	      }
 	}
 }

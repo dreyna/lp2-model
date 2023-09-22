@@ -39,8 +39,8 @@ public class Carrera {
 	@NotNull @NotBlank    
     private String nombre;
 	@Column(name = "ESTADO")
-	@NotNull @NotBlank    
-    private char estado;
+	@NotBlank    
+    private String estado;
 	
 	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "carrera")
 	@JsonIgnore
