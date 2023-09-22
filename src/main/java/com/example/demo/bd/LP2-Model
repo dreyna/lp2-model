@@ -1,0 +1,146 @@
+{
+	"info": {
+		"_postman_id": "472644a3-ade0-430b-b8b1-c1c610ed40e8",
+		"name": "LP2-Model",
+		"schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json",
+		"_exporter_id": "28781594"
+	},
+	"item": [
+		{
+			"name": "Estudiante",
+			"item": [
+				{
+					"name": "GET - Listar estudiantes",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": "{{estudiantes}}"
+					},
+					"response": []
+				},
+				{
+					"name": "POST - Crear Estudiante",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": " {\r\n        \"nombres\": \"Carlos\",\r\n        \"apellidos\": \"Morales\",\r\n        \"edad\": 20,\r\n        \"direccion\": \"Chosica\",\r\n        \"ciudad\": \"Lima\",\r\n        \"pais\": \"Peru\",\r\n        \"carrera\": {\r\n            \"id\": 1,\r\n            \"nombre\": \"SISTEMAS\",\r\n            \"estado\": \"1\"\r\n        }\r\n    }",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "{{estudiantes}}"
+					},
+					"response": []
+				},
+				{
+					"name": "GET - Buscar ID",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": "{{estudiantes}}/11"
+					},
+					"response": []
+				},
+				{
+					"name": "PUT - Modificar Estudiante",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"id\": 11,\r\n    \"nombres\": \"Carlos Juan\",\r\n    \"apellidos\": \"Morales Minaya\",\r\n    \"edad\": 19,\r\n    \"direccion\": \"San Juan de Lurigancho\",\r\n    \"ciudad\": \"Lima\",\r\n    \"pais\": \"Peru\",\r\n    \"carrera\": {\r\n        \"id\": 1,\r\n        \"nombre\": \"SISTEMAS\",\r\n        \"estado\": \"1\"\r\n    }\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "{{estudiantes}}/11"
+					},
+					"response": []
+				},
+				{
+					"name": "DELETE - Eliminar Estudiante",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": "{{estudiantes}}/8"
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Carrera",
+			"item": [
+				{
+					"name": "GET - Listar Carreras",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": "{{carreras}}"
+					},
+					"response": []
+				},
+				{
+					"name": "POST - Crear Carrera",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n        \"nombre\": \"Enfermeria\",\r\n        \"estado\": \"1\"\r\n    }",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "{{carreras}}"
+					},
+					"response": []
+				},
+				{
+					"name": "GET - Buscar Carrera ID",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": "{{carreras}}/5"
+					},
+					"response": []
+				},
+				{
+					"name": "PUT - Modificar Carrera",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"id\": 5,\r\n    \"nombre\": \"Enfermeria2\",\r\n    \"estado\": \"1\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "{{carreras}}/5"
+					},
+					"response": []
+				},
+				{
+					"name": "DELETE - Eliminar Carrera",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": "{{carreras}}/5"
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}
